@@ -1,7 +1,7 @@
 Git Spell Check
 ===============
 
-This script is a Git pre-commit hook that spell checks changes in files which you are about to commit.
+This script is a Git commit-msg hook that spell checks changes in files which you are about to commit.
 
 
 Instructions
@@ -11,9 +11,9 @@ To use this script, clone the following repo:
 
     ~]$ git clone git://github.com/mprpic/git-spell-check.git
 
-Place this script into the **.git/hooks/** directory in your repository. It must be called **pre-commit** and be executable. A Git hook only works in a single repository. You need to copy this hook into every repository you wish to use it in manually. Optionally, you can set up a symlink in the **.git/hooks/** directory pointing to the script. That way, each time the script is updated in the GitHub repo, you won't have to replace it in the **.git/hooks/** directory. To create a symlink in your repository, execute:
+Place this script into the **.git/hooks/** directory in your repository. It must be called **commit-msg** and be executable. A Git hook only works in a single repository. You need to copy this hook into every repository you wish to use it in manually. Optionally, you can set up a symlink in the **.git/hooks/** directory pointing to the script. That way, each time the script is updated in the GitHub repo, you won't have to replace it in the **.git/hooks/** directory. To create a symlink in your repository, execute:
 
-    book]$ ln -s ~/git-spell-check/pre-commit .git/hooks/pre-commit
+    book]$ ln -s ~/git-spell-check/commit-msg .git/hooks/commit-msg
 
 You will need to install [`aspell`](http://aspell.net/).
 
@@ -33,7 +33,7 @@ Each time you try to commit something, this script is run to spell check the con
       * i[gnore]  (add some words into dict, ignore rest, continue with commit)
       * n[one]    (no commit)
 
-Should you want to bypass the pre-commit hook (though not recommended), you can commit with **git commit --no-verify**.
+Should you want to bypass the commit-msg hook (though not recommended), you can commit with **git commit --no-verify**.
 
 
 To-Do
@@ -45,7 +45,7 @@ To-Do
 Copyright
 ---------
 
-Git Spell Check — spell checking pre-commit Git hook. Copyright (C) 2012 Martin Prpič
+Git Spell Check — spell checking commit-msg Git hook. Copyright (C) 2012 Martin Prpič
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 

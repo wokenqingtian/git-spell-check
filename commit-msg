@@ -70,20 +70,14 @@ function cleanup() {
 # Spell checks content you're about to commit. Writes out words that are misspelled or exits with 0 (i.e. continues with
 # commit).
 function spell_check() {
-
-    words=$(git diff --cached | grep -e "^+[^+]" | aspell --mode=sgml list --add-sgml-skip={ulink,code,literal,firstname,parameter,option,package,replaceable,programlisting,userinput,screen,filename,command,computeroutput,abbrev,accel,orgname,surname,foreignphrase,acronym,hardware,keycap,systemitem,application} --lang="$lang" --extra-dicts="$temp_dict" | sort -u)
+    words=$(cat "$1" | aspell --mode=sgml list --add-sgml-skip={ulink,code,literal,firstname,parameter,option,package,replaceable,programlisting,userinput,screen,filename,command,computeroutput,abbrev,accel,orgname,surname,foreignphrase,acronym,hardware,keycap,systemitem,application} --lang="$lang" --extra-dicts="$temp_dict" | sort -u)
     if [ ! "$words" ]; then
         printf "%s\n" "No typos found. Proceeding with commit..."
         cleanup; exit 0
     fi
-    printf "%s\n" "Spell check failed on the following words:
+    printf "%s\n" "Commit message spell check failed on the following words:
 -------------------------------------------------"
     echo $words
-    for word in $words; do
-        grep --color=always --exclude-dir={.git,tmp} -HIrone "\<$word\>" $(git diff --cached --name-only --diff-filter=ACMRTUXB) | awk -F ":" '{print "File: " $1 "\ton line: " $2 "\tTypo: " $3}'
-        printf "%s\n" "-------------------"
-    done
-
 }
 
 # Adds all, some, or none of the misspelled words to the custom dictionary.
@@ -173,5 +167,5 @@ function add_none() {
 
 
 prepare_dictionary
-spell_check
+spell_check $1
 add_words_to_dict
